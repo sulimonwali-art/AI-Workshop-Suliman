@@ -1,0 +1,129 @@
+Windows 11 Gaming Helper 2.0 validation
+Executed on Linux using PowerShell 7.4.6.
+Registry, identity and powercfg boundaries are mocked. Real temporary journal persistence and validation execute.
+Windows PowerShell 5.1, WinForms rendering, actual Windows registry/powercfg integration and gaming benchmarks were not executed here.
+No changes applied to the user's PC.
+
+PARSE PASS: Test-Benchmark.ps1
+PARSE PASS: Test-Core.ps1
+PARSE PASS: Test-Performance.ps1
+PARSE PASS: GamingHelper.Advisor.psm1
+PARSE PASS: GamingHelper.Benchmark.psm1
+PARSE PASS: GamingHelper.Core.psm1
+PARSE PASS: GamingHelper.Performance.psm1
+PARSE PASS: GamingHelper.ps1
+MODULE IMPORT PASS: 4 modules; 9 tweaks; 18 guides
+
+PASS only nine explicit, explained tweaks are exposed
+PASS unknown and empty selections cannot mutate anything
+What if: Performing the operation "Set DWord: 1" on target "HKCU\Software\Microsoft\GameBar\AllowAutoGameMode".
+What if: Performing the operation "Set DWord: 1" on target "HKCU\Software\Microsoft\GameBar\AutoGameModeEnabled".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR\AppCaptureEnabled".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\System\GameConfigStore\GameDVR_Enabled".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SilentInstalledAppsEnabled".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SystemPaneSuggestionsEnabled".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SubscribedContent-338388Enabled".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SubscribedContent-338389Enabled".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Start_IrisRecommendations".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDa".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\EnableTransparency".
+What if: Performing the operation "Set String: "0"" on target "HKCU\Control Panel\Desktop\WindowMetrics\MinAnimate".
+What if: Performing the operation "Set String: "0"" on target "HKCU\Control Panel\Mouse\MouseSpeed".
+What if: Performing the operation "Set String: "0"" on target "HKCU\Control Panel\Mouse\MouseThreshold1".
+What if: Performing the operation "Set String: "0"" on target "HKCU\Control Panel\Mouse\MouseThreshold2".
+What if: Performing the operation "Set DWord: 0" on target "HKCU\Software\Microsoft\GameBar\UseNexusForGameBarEnabled".
+What if: Performing the operation "Set DWord: 1" on target "HKCU\Software\Policies\Microsoft\Windows\Explorer\DisableSearchBoxSuggestions".
+PASS preview never creates backup storage or changes values
+PASS apply persists original values before each mutation and restores absent values
+PASS already configured values need no backup or registry write
+PASS string input and animation preferences retain their required registry types
+PASS expanded DWORD settings all restore originally absent values
+PASS original version-one DWORD journal remains restorable after expansion
+PASS original DWord type and value survive JSON roundtrip restore
+PASS original QWord type and value survive JSON roundtrip restore
+PASS original String type and value survive JSON roundtrip restore
+PASS original ExpandString type and value survive JSON roundtrip restore
+PASS original Binary type and value survive JSON roundtrip restore
+PASS original None type and value survive JSON roundtrip restore
+PASS original MultiString type and value survive JSON roundtrip restore
+What if: Performing the operation "Restore saved original value" on target "HKCU\Software\Microsoft\GameBar\AutoGameModeEnabled".
+What if: Performing the operation "Restore saved original value" on target "HKCU\Software\Microsoft\GameBar\AllowAutoGameMode".
+PASS restore preview leaves registry and backup bytes unchanged
+PASS concurrent user preference changes are preserved during restore
+PASS repeating completed restore cannot undo a newer user choice
+PASS a previously conflicted restore entry cannot be resurrected by retry
+PASS apply detects an external change during durable journal persistence
+PASS restore detects an external change during durable journal persistence
+PASS backup directories with linked ancestors are rejected before writes
+PASS a first journal-save failure prevents every registry write
+PASS failure saving applied status retains a recoverable pending journal
+PASS registry write failures are reported without corrupting other originals
+PASS restore rejects different SID before any mutation
+PASS restore rejects different machine before any mutation
+PASS restore rejects arbitrary registry path before any mutation
+PASS restore rejects arbitrary registry value before any mutation
+PASS restore rejects unexpected applied value before any mutation
+PASS restore rejects unsupported original type before any mutation
+PASS restore rejects duplicate registry entry before any mutation
+PASS restore rejects unsupported schema before any mutation
+PASS restore rejects journals outside the selected backup directory
+PASS a restore journal-save failure prevents restoration writes
+Tests: 35 passed, 0 failed
+
+PASS active power-plan parser accepts localized text and canonicalizes uppercase GUID
+PASS active power-plan parser rejects missing or ambiguous GUIDs
+PASS power-plan inventory uses GUIDs independently of localized or custom names
+PASS native power-plan setter rejects unlisted identifiers without invoking setactive
+PASS powercfg failure propagates through the real setter into a failed apply result
+PASS unknown action and missing game cannot create changes or backup storage
+What if: Performing the operation "Try the existing High performance power plan. Can increase heat, power use and fan noise on your 14900KF; may not improve FPS. Applies to the active PC power plan." on target "ActivePowerPlan".
+PASS HighPerformancePower preview has no writes or backup directory
+What if: Performing the operation "Set per-game High performance GPU preference; other GPU options are preserved. On a single-GPU 14900KF PC this may make no difference." on target "/tmp/gaming-performance-tests-95b34c19603f445ba60466377e208034/ffbafbd9fb4d4226a63af7fa7d8017f7/test game.exe".
+PASS GameGpu preview has no writes or backup directory
+PASS already-active Balanced is a no-op without journaling
+PASS unavailable High performance plan fails before any changes
+PASS High performance records Balanced before activation and restores it
+PASS per-game GPU preference preserves unrelated semicolon options
+PASS an originally absent GPU preference is removed on undo
+PASS GPU undo still works after the selected game is removed
+What if: Performing the operation "Restore saved original performance preference" on target "ActivePowerPlan".
+PASS HighPerformancePower restore preview leaves settings and journal bytes unchanged
+PASS HighPerformancePower first-save failure prevents all state mutations
+PASS HighPerformancePower post-write journal failure leaves an interrupted plan recoverable
+PASS HighPerformancePower native mutation failure is reported and preserves original
+PASS HighPerformancePower restore journal-save failure prevents restoration writes
+PASS HighPerformancePower detects a late external preference change after backup persistence
+PASS HighPerformancePower detects a late external preference change while preparing restore
+What if: Performing the operation "Restore saved original performance preference" on target "/tmp/gaming-performance-tests-95b34c19603f445ba60466377e208034/936648074c16475b92e7b715a63fe18c/test game.exe".
+PASS GameGpu restore preview leaves settings and journal bytes unchanged
+PASS GameGpu first-save failure prevents all state mutations
+PASS GameGpu post-write journal failure leaves an interrupted plan recoverable
+PASS GameGpu native mutation failure is reported and preserves original
+PASS GameGpu restore journal-save failure prevents restoration writes
+PASS GameGpu detects a late external preference change after backup persistence
+PASS GameGpu detects a late external preference change while preparing restore
+PASS a custom original power plan is preserved and restored exactly
+PASS completed power-plan undo cannot overwrite a newer active plan
+PASS newer external GPU choice is skipped and cannot be resurrected on retry
+PASS completed GPU undo never overwrites a later user choice
+PASS restore rejects different SID before any mutation
+PASS restore rejects different machine before any mutation
+PASS restore rejects unknown action before any mutation
+PASS restore rejects unexpected applied GPU value before any mutation
+PASS restore rejects unsupported original registry type before any mutation
+PASS restore rejects wrong schema before any mutation
+PASS restore rejects non-executable target before any mutation
+PASS restore rejects a journal copied outside its backup root
+Tests: 40 passed, 0 failed
+
+PASS constant 10ms frames give 100 FPS and 10ms p99
+PASS slowest1% mean differs from overall FPS and p99
+PASS 0.1% low requires1000 frames and keeps slow outliers
+PASS bad frame times and undersized samples are rejected
+PASS PresentMon import preserves timings and reports zero rows
+PASS mixed processes and swap chains are rejected
+PASS explicit ms header accepted and invalid data rejected
+PASS comparison reports signed changes and lower frame time as better
+Benchmark tests: 8 passed, 0 failed
+
+Total: 83 automated tests passed; 0 failed. Windows behavior remains unverified by execution.
